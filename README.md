@@ -52,6 +52,6 @@ More codes doing with Coin.
 ### Methods
 * `List<Coin> filterByCurrency(final List<Coin> coinlist, String currency)` returns the list of coins with specific currency.
 * `void sortByCurrency(List<Coin> coins)` sorts list by currency. (Of course!)
-* `void sumByCurrency(List<Coin> coins)` prints balance for each currency in the list.(Now, limited 1024 coins per currency.)
+* `void sumByCurrency(List<Coin> coins)` prints balance for each currency in the list.
 
 * `void main(String[] args)` for testing CoinUtil.

@@ -56,14 +56,14 @@ public class CoinUtil {
 	public static void sumByCurrency(List<Coin> coins) {
             coins.sort(new CompareByCurrency());
             List<Purse> temp = new ArrayList<>();
-            temp.add(new Purse(1024));
+            temp.add(new Purse(Integer.MAX_VALUE));
             int count = 0;
             for(Coin c : coins){
                 try{
                     temp.get(count).insert(c);
                 }
                 catch(IllegalArgumentException e){
-                    temp.add(new Purse(1024));
+                    temp.add(new Purse(Integer.MAX_VALUE));
                     temp.get(++count).insert(c);
                 }
             }
