@@ -10,6 +10,7 @@ Makes user interact to control the Purse.
 
 ### Constructor
 * `ConsoleDialog(Purse purse)`
+
 ### Methods
 * `void run()` is the main interface of the ConsoleDialog.
 * `void depositDialog()` shows deposite information to the user.
@@ -21,6 +22,7 @@ This is the Coin object
 ### Constructors
 * `Coin( double value, String currency )`
 * `Coin( double value )` this will set current currency to "Baht"
+
 ### Methods
 * `double getValue()` gets value of the Coin.
 * `String getCurrency()` gets currency of the Coin.
