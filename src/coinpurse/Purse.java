@@ -128,6 +128,10 @@ public class Purse {
     	return count()+" coin(s) with value "+getBalance();
     }
     
+    /**
+     * Get the purse currency.
+     * @return currency of the first coin in the purse.
+     */
     public String getCurrency(){
         if(getCapacity()==0){
             return null;
