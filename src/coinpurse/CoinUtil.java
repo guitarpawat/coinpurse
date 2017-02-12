@@ -54,7 +54,7 @@ public class CoinUtil {
 	 * Hint: this is easy if you sort the coins by currency first. :-)
 	 */
 	public static void sumByCurrency(List<Coin> coins) {
-            coins.sort(new CompareByCurrency());
+            sortByCurrency(coins);
             List<Purse> temp = new ArrayList<>();
             temp.add(new Purse(Integer.MAX_VALUE));
             int count = 0;
