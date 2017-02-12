@@ -68,7 +68,7 @@ public class CoinUtil {
                 }
             }
             for(Purse p : temp){
-                System.out.println(p.getBalance()+" "+p.getCurrency());
+                System.out.println(String.format("%.2f %s",p.getBalance(),p.getCurrency()));
             }
 	}
 	
