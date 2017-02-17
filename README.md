@@ -1,57 +1,14 @@
 # Coinpurse
 
-This coinpurse has 5 classes
+## Description
+This CoinPurse has two class of valueable object, `Coin` and `BankNote`. Both are implement Valuable interface and `Valuable extends Comparable<Valuable>`.
 
-## `Main`
-Runs the ConsoleDialog class.
+## About interface
+From the interface `Valuable` has two abstract method, `getValue()` and `getCurrency()`, and extends Comparable<Valuable>.
+You can create more type (class) for monetary object just implements Valuable, it will support in all other classes in CoinPurse. This will support Liskov Substitution Principle (LSP) statement and OOP polymorphism.
 
-## `ConsoleDialog`
-Makes user interact to control the Purse.
+## Testing
+There are `Main` and `PurseTest` (junit) classes for testing.
 
-### Constructor
-* `ConsoleDialog(Purse purse)`
-
-### Methods
-* `void run()` is the main interface of the ConsoleDialog.
-* `void depositDialog()` shows deposite information to the user.
-* `void withdrawDialog()` shows withdraw result to the user.
-
-## `Coin`
-This is the Coin object
-
-### Constructors
-* `Coin( double value, String currency )`
-* `Coin( double value )` this will set current currency to "Baht"
-
-### Methods
-* `double getValue()` gets value of the Coin.
-* `String getCurrency()` gets currency of the Coin.
-* `boolean equals(Object obj)` checks that two Coins are equal.
-* `int compareTo(Coin other)` compares two Coins, throws exception if there're not same currency.
-* `String toString()` returns description of the Coin.
-
-## `Purse`
-Collects the Coins.
-
-### Constructors
-* `Purse( int capacity )`
-
-### Methods
-* `int count()` shows number of coins in the purse.
-* `double getBalance()` gets total balance of all coins in the purse.
-* `int getCapacity()` gets limit number of coins in the purse.
-* `boolean isFull()` checks that purse are full or not.
-* `boolean insert( Coin coin )` inserts new coin to the purse, throws exception if new coin don't have the same currency as first coin in the purse.
-* `Coin[] withdraw( double amount )` withdraws coins and shows the coins that witdraw.
-* `String toString()` returns the description of the purse.
-* `String getCurrency()` returns the purse currency.
-
-## `CoinUtil`
-More codes doing with Coin.
-
-### Methods
-* `List<Coin> filterByCurrency(final List<Coin> coinlist, String currency)` returns the list of coins with specific currency.
-* `void sortByCurrency(List<Coin> coins)` sorts list by currency. (Of course!)
-* `void sumByCurrency(List<Coin> coins)` prints balance for each currency in the list.
-
-* `void main(String[] args)` for testing CoinUtil.
+## Utilities
+`CoinUtil` is the example of applying CoinPurse class.
