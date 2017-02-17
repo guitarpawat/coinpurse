@@ -3,7 +3,7 @@ package coinpurse;
 import java.util.Scanner;
 
 /** 
- * User Interface for the Coin Purse. 
+ * User Interface for the CoinPurse. 
  * This class provides simple interactive dialog for inserting
  * and removing money to/from the purse, and displaying the
  * balance.
@@ -50,16 +50,24 @@ public class ConsoleDialog implements Runnable {
      *  Show result of success or failure.
      */
     public void depositDialog() {
-        System.out.print("Enter value of coin(s) to deposit on one line [eg: 5 5 1]: ");
+        System.out.print("Enter value of coin(s)/note(s) to deposit on one line [eg: 5 5 1]: ");
         String inline = console.nextLine();
         // parse input line into numbers
         Scanner scanline = new Scanner(inline);
         while( scanline.hasNextDouble() ) {
             double value = scanline.nextDouble();
-            Coin coin = new Coin(value);
-            System.out.printf("Deposit %s... ", coin.toString() );
-            boolean ok = purse.insert(coin);
-            System.out.println( (ok? "ok" : "FAILED") );
+            if(value<20.0){
+                Coin coin = new Coin(value);
+                System.out.printf("Deposit %s... ", coin.toString() );
+                boolean ok = purse.insert(coin);
+                System.out.println( (ok? "ok" : "FAILED") );
+            }
+            else{
+                BankNote note = new BankNote(value);
+                System.out.printf("Deposit %s... ", note.toString() );
+                boolean ok = purse.insert(note);
+                System.out.println( (ok? "ok" : "FAILED") );
+            }
         }
         if ( scanline.hasNext() )
             System.out.println("Invalid input: "+scanline.next() );
@@ -71,11 +79,11 @@ public class ConsoleDialog implements Runnable {
     public void withdrawDialog() {
         System.out.print("How much to withdraw? ");
         if ( console.hasNextDouble() ) {
-             double amount = console.nextDouble( );
-             Coin [] coins = purse.withdraw(amount);
-             if ( coins == null ) 
+            double amount = console.nextDouble( );
+            Valuable [] coins = purse.withdraw(amount);
+            if ( coins == null ) 
                 System.out.printf("Sorry, couldn't withdraw %g %s\n", amount, CURRENCY);
-             else {
+            else {
                 System.out.print("You withdrew:");
                 for(int k=0; k<coins.length; k++) {
                 	System.out.print(" " + coins[k].toString() );

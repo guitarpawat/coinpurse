@@ -1,45 +1,49 @@
 package coinpurse;
+
 /**
- * A coin with a monetary value and currency.
+ * A bank note with a monetary value and currency.
  * @author Pawat Nakpiphatkul
  */
-public class Coin implements Valuable{
+public class BankNote implements Valuable{
     public static final String DEFAULT_CURRENCY = "Baht";
-    /** Value of the coin. */
+    /** Value of the bank note. */
     private final double value;
     /** The currency, of course. */
     private final String currency;
+    /** Serial number of the bank note */
+    private final long serialNumber;
     
     /**
-     * A coin with given value using the default currency.
-     * @param value is a value of the Coin.
+     * A bank note with given value using the default currency.
+     * @param value is a value of the BankNote.
      */
-    public Coin( double value ) {
+    public BankNote( double value ) {
         this.value = value;
         this.currency = DEFAULT_CURRENCY;
+        this.serialNumber = System.nanoTime();
     }
     
     /**
-     * A coin with given value and currency.
-     * @param value is a value of the Coin.
-     * @param currency is a currency of the Coin.
+     * A bank note with given value and currency.
+     * @param value is a value of the BankNote.
+     * @param currency is a currency of the BankNote.
      */
-    public Coin( double value, String currency ) {
+    public BankNote( double value, String currency ) {
         this.value = value;
         this.currency = currency;
+        this.serialNumber = System.nanoTime();
     }
-
     /**
-     * Get the coin value.
-     * @return the value of the coin.
+     * Get the bank note value.
+     * @return the value of the bank note.
      */
     public double getValue() {
         return this.value;
     } 
     
     /**
-     * Get the coin currency.
-     * @return the currency of the coin.
+     * Get the bank note currency.
+     * @return the currency of the bank note.
      */
     public String getCurrency() {
         return this.currency;
@@ -62,8 +66,8 @@ public class Coin implements Valuable{
     }
     
     /**
-     * Compare two coin is less, greater than or equal.
-     * @param other is another Coin object.
+     * Compare two bank note is less, greater than or equal.
+     * @param other is another BankNote object.
      * @throws IllegalArgumentException if the objects are null or don't have the same currency.
      * @return positive integer if this object is greater than other, negative if less than, otherwise zero.
      */
@@ -76,14 +80,22 @@ public class Coin implements Valuable{
         return (int)((this.value-other.getValue())*100);
     }
     /**
-     * Get the information of the Coin in String format.
-     * @return information of the Coin.
+     * Get the information of the BankNote in String format.
+     * @return information of the BankNote.
      */
     @Override
     public String toString() {
         String returnValue = ""+value;
         if(returnValue.charAt(returnValue.length()-1)=='0')
             returnValue = returnValue.substring(0,returnValue.length()-2);
-        return returnValue+"-"+currency+" coin";
+        return returnValue+"-"+currency+" note ["+serialNumber+']';
+    }
+    
+    /**
+     * Get the serial number of the bank note.
+     * @return serial number of this bank note
+     */
+    public long getSerial(){
+        return this.serialNumber;
     }
 }
