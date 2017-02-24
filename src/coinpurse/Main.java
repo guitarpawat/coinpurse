@@ -16,7 +16,7 @@ public class Main {
         // 1. create a Purse
         Purse purse = new Purse(CAPACITY);
         // 2. create a ConsoleDialog with a reference to the Purse object
-        Runnable task = new ConsoleDialog(purse);
+        Runnable task = new ConsoleDialog(purse,"Malaysia");
         // 3. run the ConsoleDialog
         task.run();
     }

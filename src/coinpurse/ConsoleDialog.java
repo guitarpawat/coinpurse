@@ -8,21 +8,25 @@ import java.util.Scanner;
  * and removing money to/from the purse, and displaying the
  * balance.
  */
-public class ConsoleDialog implements Runnable {
+public class ConsoleDialog implements Runnable{
     // default currency for this dialog
-    public static final String CURRENCY = "Baht";
+    public final String CURRENCY;
     // use a single java.util.Scanner object for reading all input
     private static Scanner console = new Scanner( System.in );
     // contains the reference purse
     private Purse purse;
-    // MoneyFactory for create Valuable object.
-    private static MoneyFactory factory = MoneyFactory.initialize("Thailand");
+    // MoneyFactory for create Valuable object
+    private static MoneyFactory factory;
     
     /** 
      * Initialize a new Purse dialog.
      * @param purse is the Purse to interact with.
      */
-    public ConsoleDialog(Purse purse) {
+    public ConsoleDialog(Purse purse,String country) {
+        if(country.equalsIgnoreCase("Thailand")) CURRENCY = "Baht";
+        else if(country.equalsIgnoreCase("Malaysia")) CURRENCY = "Ringgit";
+        else CURRENCY = country;
+        factory = MoneyFactory.initialize(country);
         this.purse = purse;
     }
     

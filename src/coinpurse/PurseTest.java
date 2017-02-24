@@ -156,6 +156,18 @@ public class PurseTest {
         assertEquals(126, purse.getBalance(), TOL);
         assertTrue(purse.getCurrency().equalsIgnoreCase("dollar"));
     }
+    
+    @Test
+    public void testSingletonInstance() {
+        MoneyFactory factory = MoneyFactory.initialize("Malaysia");
+        MoneyFactory f1 = factory.getInstance();
+        MoneyFactory f2 = factory.getInstance();
+        assertTrue(f1 == f2);
+        factory = MoneyFactory.initialize("Thailand");
+        MoneyFactory f3 = factory.getInstance();
+        MoneyFactory f4 = factory.getInstance();
+        assertTrue(f3 == f4);
+    }
 
     /**
      * Sum the value of some coins.

@@ -82,11 +82,4 @@ public abstract class AbstractValuable implements Valuable {
         return (int) ((this.value - other.getValue()) * 100);
     }
     
-    /** Get description of Valuable objects.
-     * @return description of Valuable object.
-     */
-    @Override
-    public abstract String toString();
-
-    
 }
