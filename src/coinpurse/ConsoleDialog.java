@@ -15,6 +15,8 @@ public class ConsoleDialog implements Runnable {
     private static Scanner console = new Scanner( System.in );
     // contains the reference purse
     private Purse purse;
+    // MoneyFactory for create Valuable object.
+    private static MoneyFactory factory = MoneyFactory.initialize("Thailand");
     
     /** 
      * Initialize a new Purse dialog.
@@ -56,18 +58,16 @@ public class ConsoleDialog implements Runnable {
         Scanner scanline = new Scanner(inline);
         while( scanline.hasNextDouble() ) {
             double value = scanline.nextDouble();
-            if(value<20.0){
-                Coin coin = new Coin(value);
-                System.out.printf("Deposit %s... ", coin.toString() );
-                boolean ok = purse.insert(coin);
+            try {
+                Valuable valuable = factory.createMoney(value);
+               
+                System.out.printf("Deposit %s... ", valuable);
+                boolean ok = purse.insert(valuable);
                 System.out.println( (ok? "ok" : "FAILED") );
             }
-            else{
-                BankNote note = new BankNote(value);
-                System.out.printf("Deposit %s... ", note.toString() );
-                boolean ok = purse.insert(note);
-                System.out.println( (ok? "ok" : "FAILED") );
-            }
+            catch(IllegalArgumentException e) {
+                System.out.println("Invalid Amount");
+            } 
         }
         if ( scanline.hasNext() )
             System.out.println("Invalid input: "+scanline.next() );
