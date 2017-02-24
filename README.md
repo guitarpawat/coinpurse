@@ -1,14 +1,15 @@
-# Coinpurse
+# CoinPurse
 
-## Description
-This CoinPurse has two class of valueable object, `Coin` and `BankNote`. Both are implement Valuable interface and `Valuable extends Comparable<Valuable>`.
+CoinPurse simulate monetary objects and Purse by using inheritance and polymorphism.
 
-## About interface
-From the interface `Valuable` has two abstract method, `getValue()` and `getCurrency()`, and extends Comparable<Valuable>.
-You can create more type (class) for monetary object just implements Valuable, it will support in all other classes in CoinPurse. This will support Liskov Substitution Principle (LSP) statement and OOP polymorphism.
+## Polymorphism
 
-## Testing
-There are `Main` and `PurseTest` (junit) classes for testing.
+Polymorphism can be used when one task perform in different ways in many class. Sometimes, it like a draft for the classes.
 
-## Utilities
-`CoinUtil` is the example of applying CoinPurse class.
+## Inheritance
+
+You can use methods and variables from superclass in subclasses if it is not private and can override if it is not final.
+
+## Abstract class
+
+Abstract classses is like an interface but you can write some codes to use it in subclasses without writing the same code in each class again.
