@@ -30,13 +30,7 @@ public class Coin extends AbstractValuable {
     public String toString() {
         String currency = this.currency;
         double value = this.value;
-        if(this.currency.equalsIgnoreCase("Baht")){
-            if(value < 1) {
-                currency = "Satang";
-                value *=100;
-            }
-        }
-        else if(this.currency.equalsIgnoreCase("Ringgit")){
+        if(this.currency.equalsIgnoreCase("Ringgit")){
             if(value < 1) {
                 currency = "Sen";
                 value *=100;
