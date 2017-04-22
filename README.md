@@ -12,4 +12,8 @@ You can use methods and variables from superclass in subclasses if it is not pri
 
 ## Abstract class
 
-Abstract classses is like an interface but you can write some codes to use it in subclasses without writing the same code in each class again.
+Abstract classes is like an interface but you can write some codes to use it in subclasses without writing the same code in each class again.
+
+## Observer
+
+Purse class has extends Observable, so you can create any class to receive the event when it's fire. You can create and add the observer to the Main class.

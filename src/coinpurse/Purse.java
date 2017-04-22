@@ -3,6 +3,7 @@ package coinpurse;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Observable;
 
 /**
  * A coin purse contains money. You can insert money, withdraw money, check the
@@ -11,7 +12,7 @@ import java.util.List;
  *
  * @author Pawat Nakpiphatkul
  */
-public class Purse {
+public class Purse extends Observable{
 
     /**
      * Collection of objects in the purse.
@@ -93,6 +94,8 @@ public class Purse {
             return false;
         }
         money.add(coin);
+        setChanged();
+        notifyObservers();
         return true;
     }
 
@@ -106,6 +109,7 @@ public class Purse {
      * withdraw requested amount.
      */
     public Valuable[] withdraw(double amount) {
+        double allAmount = amount;
         if (amount <= 0) {
             return null;
         }
@@ -127,6 +131,8 @@ public class Purse {
                 money.remove(c);
             }
             Valuable[] array = new Valuable[returnList.size()];
+            setChanged();
+            notifyObservers();
             return returnList.toArray(array);
         }
         return null;
