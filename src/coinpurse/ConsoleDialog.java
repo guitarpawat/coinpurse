@@ -50,6 +50,7 @@ public class ConsoleDialog implements Runnable{
         }
         // confirm that we are quitting
         System.out.println("Goodbye. The purse still has "+purse.getBalance()+" "+CURRENCY);
+        System.exit(0);
     }
 
     /** Ask the user how many coins to deposit into purse, then deposit them.

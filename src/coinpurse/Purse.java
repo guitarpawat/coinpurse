@@ -1,7 +1,7 @@
 package coinpurse;
 
+import coinpurse.strategy.*;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Observable;
 
@@ -23,6 +23,11 @@ public class Purse extends Observable{
      * when the purse is created and cannot be changed.
      */
     private final int capacity;
+    
+    /**
+     * Strategy to withdraw Valuable from purse.
+     */
+    private WithdrawStrategy strategy;
 
     /**
      * Create a purse with a specified capacity.
@@ -31,6 +36,15 @@ public class Purse extends Observable{
      */
     public Purse(int capacity) {
         this.capacity = capacity;
+        strategy = new RecursiveWithdraw();
+    }
+    
+    /**
+     * Set the strategy to withdraw from purse.
+     * @param strategy is the strategy of withdraw.
+     */
+    public void setStrategy(WithdrawStrategy strategy) {
+        this.strategy = strategy;
     }
 
     /**
@@ -109,31 +123,15 @@ public class Purse extends Observable{
      * withdraw requested amount.
      */
     public Valuable[] withdraw(double amount) {
-        double allAmount = amount;
-        if (amount <= 0) {
-            return null;
+        List<Valuable> returnValue = null;
+        if(getBalance() >= amount) {
+            returnValue = strategy.withdraw(amount,money.subList(0,money.size()));
         }
-        Collections.sort(money);
-        Collections.reverse(money);
-        List<Valuable> returnList = new ArrayList();
-        for (Valuable c : money) {
-            double value = c.getValue();
-            if (amount - value >= 0) {
-                amount -= value;
-                returnList.add(c);
-                if (amount == 0) {
-                    break;
-                }
-            }
-        }
-        if (amount == 0.0) {
-            for (Valuable c : returnList) {
-                money.remove(c);
-            }
-            Valuable[] array = new Valuable[returnList.size()];
+        if(returnValue != null){
+            for(Valuable v : returnValue) money.remove(v);
             setChanged();
             notifyObservers();
-            return returnList.toArray(array);
+            return returnValue.toArray(new Valuable[0]);
         }
         return null;
     }

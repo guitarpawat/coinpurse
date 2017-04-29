@@ -21,7 +21,7 @@ public class Main {
         purse.addObserver(new PurseBalanceObserver());
         purse.addObserver(new PurseStatusObserver());
         // 2. create a ConsoleDialog with a reference to the Purse object
-        Runnable task = new ConsoleDialog(purse,"Malaysia");
+        Runnable task = new ConsoleDialog(purse,"Thailand");
         // 3. run the ConsoleDialog
         task.run();
     }

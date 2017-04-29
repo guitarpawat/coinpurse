@@ -1,7 +1,10 @@
 package coinpurse;
 
+import coinpurse.strategy.GreedyWithdraw;
+import coinpurse.strategy.RecursiveWithdraw;
 import static org.junit.Assert.*;
 import org.junit.After;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -168,7 +171,63 @@ public class PurseTest {
         MoneyFactory f4 = factory.getInstance();
         assertTrue(f3 == f4);
     }
+    
+    @Test
+    public void testGreedyWithdraw() {
+        Purse purse = new Purse(15);
+        purse.setStrategy(new GreedyWithdraw());
+        for(int i=0 ; i<5 ; i++) purse.insert(new Coin(1));
+        purse.insert(new BankNote(1000));
+        purse.insert(new Coin(5));
+        purse.insert(new BankNote(100));
+        purse.insert(new Coin(10));
+        purse.insert(new Coin(1));
+        purse.insert(new Coin(2));
+        purse.insert(new BankNote(500));
+        purse.insert(new Coin(5));
+        purse.insert(new BankNote(50));
+        purse.insert(new BankNote(20));
+        Valuable[] withdraw = purse.withdraw(85);
+        assertEquals(85,sumValue(withdraw),TOL);
+        Valuable[] check = {new BankNote(50),new BankNote(20),new Coin(10),new Coin(5)};
+        Assert.assertArrayEquals(check,withdraw);
+    }
 
+        @Test
+    public void testRecursiveWithdraw() {
+        Purse purse = new Purse(5);
+        purse.setStrategy(new RecursiveWithdraw());
+        for(int i=0 ; i<3 ; i++) purse.insert(new Coin(2));
+        purse.insert(new Coin(5));
+        purse.insert(new Coin(10));
+        Valuable[] withdraw = purse.withdraw(16);
+        assertEquals(16,sumValue(withdraw),TOL);
+    }
+    
+    @Test
+    public void testSetStrategy() {
+        Purse purse = new Purse(5);
+        for(int i=0 ; i<3 ; i++) purse.insert(new Coin(2));
+        purse.insert(new Coin(5));
+        purse.insert(new Coin(10));
+        Valuable[] withdraw = purse.withdraw(16);
+        assertEquals(16,sumValue(withdraw),TOL);
+        purse = new Purse(5);
+        for(int i=0 ; i<3 ; i++) purse.insert(new Coin(2));
+        purse.insert(new Coin(5));
+        purse.insert(new Coin(10));
+        purse.setStrategy(new GreedyWithdraw());
+        withdraw = purse.withdraw(16);
+        assertNotEquals(16,sumValue(withdraw),TOL);
+        purse = new Purse(5);
+        for(int i=0 ; i<3 ; i++) purse.insert(new Coin(2));
+        purse.insert(new Coin(5));
+        purse.insert(new Coin(10));
+        purse.setStrategy(new RecursiveWithdraw());
+        withdraw = purse.withdraw(16);
+        assertEquals(16,sumValue(withdraw),TOL);
+        }
+    
     /**
      * Sum the value of some coins.
      *
