@@ -1,6 +1,7 @@
 package coinpurse;
 
 import java.util.*;
+import java.util.function.Predicate;
 import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
@@ -22,16 +23,30 @@ public class CoinUtil {
      * the requested currency.
      */
     public static List<Valuable> filterByCurrency(final List<Valuable> coinlist, String currency) {
-        if (currency == null) {
-            throw new IllegalArgumentException("Currency cannot be null");
+        if (currency == null) throw new IllegalArgumentException("Currency cannot be null");
+        Predicate<Valuable> filter = (c) -> (c.getCurrency().equalsIgnoreCase(currency));
+        return coinlist.stream().filter(filter).collect(Collectors.toList());
+//        List<Valuable> temp = new ArrayList<>();
+//        for (Valuable c : coinlist) {
+//            if (c.getCurrency().equalsIgnoreCase(currency)) {
+//                temp.add(c);
+//            }
+//        }
+//        return Collections.unmodifiableList(temp); // return a list of coin references copied from coinlist
+    }
+    
+    /**
+     * Returning the larger of a and b, according to the
+     * natural ordering (defined by compartTo).
+     * @return the maximum value.
+     */
+    public static <E extends Comparable<? super E>> E max(E... input) {
+        if(input.length <= 0) return null;
+        E max = input[0];
+        for(E e : input) {
+            if(e.compareTo(max) > 0) max = e;
         }
-        List<Valuable> temp = new ArrayList<>();
-        for (Valuable c : coinlist) {
-            if (c.getCurrency().equalsIgnoreCase(currency)) {
-                temp.add(c);
-            }
-        }
-        return Collections.unmodifiableList(temp); // return a list of coin references copied from coinlist
+        return max;
     }
 
     /**
@@ -40,7 +55,7 @@ public class CoinUtil {
      *
      * @param coins is a List of Valuable objects we want to sort.
      */
-    public static void sortByCurrency(List<Valuable> coins) {
+    public static void sortByCurrency(List<? super Valuable> coins) {
         coins.sort(new CompareByCurrency());
     }
 
@@ -107,6 +122,8 @@ public class CoinUtil {
         printList(coins, " ");
         sumByCurrency(coins);
 
+        Valuable result = max(new BankNote(20),new Coin(5),new Coin(10));
+        System.out.println(">> "+result);
     }
 
     /**
@@ -125,10 +142,10 @@ public class CoinUtil {
     /**
      * Make a list of coins using given values.
      */
-    public static List<Valuable> makeValuables(String currency, double... values) {
-        List<Valuable> list = new ArrayList<Valuable>();
+    public static List<BankNote> makeValuables(String currency, double... values) {
+        List<BankNote> list = new ArrayList<BankNote>();
         for (double value : values) {
-            if(value<20.0) list.add(new Coin(value, currency));
+            if(value<20.0) list.add(new BankNote(value, currency));
             else list.add(new BankNote(value, currency));
         }
         return list;
@@ -153,7 +170,7 @@ public class CoinUtil {
 /**
  * Class for comparing two Valuables by currency.
  */
-class CompareByCurrency implements Comparator<Valuable> {
+class CompareByCurrency <T extends Valuable> implements Comparator<T> {
 
     /**
      * Just a constructor
@@ -170,7 +187,7 @@ class CompareByCurrency implements Comparator<Valuable> {
      * else zero.
      */
     @Override
-    public int compare(Valuable c1, Valuable c2) {
+    public int compare(T c1, T c2) {
         return c1.getCurrency().compareToIgnoreCase(c2.getCurrency());
     }
 }
